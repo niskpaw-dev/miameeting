@@ -63,6 +63,14 @@
     const ahli = ["Tuan Haji Marsan bin Osman", "Ustaz Hazren bin Ahmad", "Ustaz Mohd Azmi bin Nurdin", "Ustaz Omar bin Yusoff", "Ustaz Muliadi bin Mohd Sadir", "Ustaz Muhammad Syahrul Afandi bin Sabran", "Ustaz Mohd Rasyid bin Mat Tusairi", "Ustaz Mohd Yazid bin Ahmad", "Ustaz Khairul Aiman bin Sahrom", "Ustaz Muhammad Sukri bin Noorrusdeen", "Ustaz Muhammad Fadzly bin Saadon", "Ustaz Muhammad Nor Radzie bin Bohari", "Ustaz Khairymazalee Yusri bin Jaafar", "Ustaz Sa'idan Wa Kariman bin Bahrom", "Ustaz Fathul Imam bin Achmad Junaidi", "Ustaz Nur Wafi bin Juremi", "Ustaz Usamah Al-Othmani bin Che Ismail", "Ustaz Muhammad Afham bin Sahrom", "Ustaz Nur Ikhwan bin Norahman", "Ustaz Muhammad Najib bin Sahril", "Ustazah Jamilah binti Jaffar", "Ustazah Siti Norfifi Fatihah binti Maskor", "Ustazah Norirdayani binti Mohmed Mogi", "Ustazah Azliha binti Alimin", "Ustazah Nadia binti Kandar", "Ustazah Ruzanna binti Zainal", "Ustazah Afifat binti Ahmad", "Ustazah Maidatul Atikah binti Mohamed Tamsir", "Ustazah Nor Shahidah binti Abdul Kadir", "Ustazah Siti Maryam binti Misran", "Ustazah Umi Nor Amirah binti Ahmadi", "Ustazah Syazwani binti Baini", "Ustazah Farah Izzati binti Ezuddin", "Ustazah Siti Aisyah binti Hamdan", "Ustazah Ida Amira binti Mohamad Hamdan", "Ustazah Masyamah binti Samsur", "Ustazah Nur Fatehah binti Bakri", "Ustazah Nurul Amirah binti Mohd Puadi", "Ustazah Norshakinah binti Mohd Shukor", "Ustazah Nurul Afidah binti Mohd Toridi"];
     let stats = {}, reasons = {}, $ = id => document.getElementById(id);
 
+    // Pembaikan utama: Gunakan Indeks (i) supaya nama dengan tanda petik tidak ralat
+    const tgl = (i) => {
+        let n = ahli[i];
+        stats[n] = $('c_'+i).checked;
+        updAbs();
+        save();
+    };
+
     const allH = (s) => {
         ahli.forEach((n, i) => { stats[n] = s; if($('c_'+i)) $('c_'+i).checked = s; });
         updAbs(); save();
@@ -70,7 +78,10 @@
 
     const init = () => {
         $('aL').innerHTML = "";
-        ahli.forEach((n, i) => { stats[n] = true; $('aL').innerHTML += `<label class="att-item"><input type="checkbox" checked onchange="stats['${n}']=this.checked;updAbs();save()" id="c_${i}">${n}</label>`; });
+        ahli.forEach((n, i) => { 
+            stats[n] = true; 
+            $('aL').innerHTML += `<label class="att-item"><input type="checkbox" checked onchange="tgl(${i})" id="c_${i}">${n}</label>`; 
+        });
         load();
     };
 
@@ -95,7 +106,7 @@
 
     const load = () => {
         const d = JSON.parse(localStorage.getItem('MIA_D'));
-        $('agC').innerHTML = ""; // Bersihkan sebelum load
+        $('agC').innerHTML = ""; 
         if(!d) { addP("Ucapan Pengerusi"); addP("Pembentangan Buku Pengurusan"); return; }
         $('tajuk').value = d.t || ""; $('tkh').value = d.tk || ""; $('mS').value = d.ms || ""; $('mE').value = d.me || ""; $('tmpt').value = d.tm || ""; $('pntp').value = d.p || ""; reasons = d.r || {};
         if(d.abs) d.abs.forEach(n => { stats[n] = false; let idx = ahli.indexOf(n); if(idx > -1 && $('c_'+idx)) $('c_'+idx).checked = false; });
@@ -112,12 +123,9 @@
         $('oT').innerText = $('tajuk').value;
         $('oM').innerText = `Tarikh: ${$('tkh').value ? hr[dt.getDay()] + ', ' + dt.getDate() + ' ' + bln[dt.getMonth()] + ' ' + dt.getFullYear() : '-'} | Masa: ${fmtM($('mS').value)} - ${fmtM($('mE').value)} | Tempat: ${$('tmpt').value}`;
         $('oH').innerHTML = ahli.filter(n => stats[n]).map((n, i) => `${i + 1}. ${n}`).join('<br>');
-        
-        // Logik sembunyi tajuk 2.0 dalam PDF jika tiada yang tidak hadir
         const tak = ahli.filter(n => !stats[n]);
         $('oA_Title').style.display = tak.length ? "block" : "none";
         $('oA').innerHTML = tak.map((n, i) => `<p style="margin:2px 0;">${i + 1}. ${n} (${reasons[n] || 'Tiada alasan'})</p>`).join('');
-        
         $('oAg').innerHTML = Array.from(document.querySelectorAll('.agenda-box')).map((b, i) => `<div style="font-weight:bold;margin-top:10px;text-decoration:underline">3.${i + 1} ${b.querySelector('.agT').value}:</div><div style="white-space:pre-wrap;font-size:11pt;margin-top:5px">${b.querySelector('.agC').value}</div>`).join('');
         $('oP').innerText = $('pntp').value; window.print();
     };
