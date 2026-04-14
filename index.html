@@ -22,7 +22,7 @@
     .btn-main { background: var(--p); color: #fff; padding: 15px; width: 100%; font-size: 1rem; box-shadow: 0 4px 12px rgba(126,34,206,0.3); margin-bottom: 10px; }
     .btn-clr { background: #fff; color: #ef4444; border: 1.5px solid #ef4444; padding: 10px; width: 100%; font-size: 0.8rem; margin-bottom: 20px; }
     footer { text-align: center; padding: 15px; color: #94a3b8; font-size: 0.7rem; border-top: 1px solid var(--b); margin-top: auto; }
-    #saveInd { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; display: none; z-index: 1000;}
+    #saveInd { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; display: none; z-index: 2000; }
     #outputArea { display: none; }
     @media print {
         #formArea, #saveInd, footer { display: none; }
@@ -45,7 +45,7 @@
             <div class="col"><label>Tempat</label><input id="tmpt" value="Bilik Mesyuarat Al-Fateh"></div>
         </div>
     </div>
-    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3 style="margin:0;font-size:1rem;color:var(--p)">1.0 Kehadiran</h3><button onclick="allH(true)" style="font-size:0.7rem;cursor:pointer">Hadir Semua</button></div><div class="att-box" id="aL"></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3 style="margin:0;font-size:1rem;color:var(--p)">1.0 Kehadiran</h3><button onclick="allH(true)" style="font-size:0.7rem;cursor:pointer;background:#f3e8ff;border:1px solid var(--p);border-radius:5px;padding:2px 8px;color:var(--p)">Hadir Semua</button></div><div class="att-box" id="aL"></div></div>
     <div class="card" id="absC" style="display:none"><h3 style="margin:0 0 10px 0;font-size:1rem;color:#ef4444">2.0 Tidak Hadir</h3><div id="absA"></div></div>
     <div class="card"><h3 style="margin:0 0 10px 0;font-size:1rem;color:var(--p)">3.0 Perbincangan</h3><div id="agC"></div><button class="btn btn-add" onclick="addP();save()">+ Tambah Point</button><label>4.0 Penutup</label><textarea id="pntp" rows="2"></textarea></div>
     <button class="btn btn-main" onclick="printM()">Jana & Cetak PDF</button><button class="btn btn-clr" onclick="clr()">Kosongkan Draf</button>
@@ -54,7 +54,7 @@
 <div id="outputArea">
     <div class="p-head"><img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="50"><h2 id="oT" style="text-transform:uppercase"></h2><div class="p-meta" id="oM"></div></div>
     <div class="s-title">1.0 Kehadiran</div><div id="oH" style="column-count:2;font-size:10pt"></div>
-    <div class="s-title">2.0 Tidak Hadir Dengan Kenyataan</div><div id="oA"></div>
+    <div id="oA_Title" class="s-title">2.0 Tidak Hadir Dengan Kenyataan</div><div id="oA"></div>
     <div class="s-title">3.0 Perbincangan</div><div id="oAg"></div>
     <div class="s-title">4.0 Penutup</div><div id="oP" style="white-space:pre-wrap;font-size:11pt"></div>
     <div class="sig"><div class="sig-b">NADIA BINTI KANDAR<br><small>Setiausaha</small></div><div class="sig-b">TUAN HAJI MARSAN BIN OSMAN<br><small>Pengerusi</small></div></div>
@@ -63,7 +63,6 @@
     const ahli = ["Tuan Haji Marsan bin Osman", "Ustaz Hazren bin Ahmad", "Ustaz Mohd Azmi bin Nurdin", "Ustaz Omar bin Yusoff", "Ustaz Muliadi bin Mohd Sadir", "Ustaz Muhammad Syahrul Afandi bin Sabran", "Ustaz Mohd Rasyid bin Mat Tusairi", "Ustaz Mohd Yazid bin Ahmad", "Ustaz Khairul Aiman bin Sahrom", "Ustaz Muhammad Sukri bin Noorrusdeen", "Ustaz Muhammad Fadzly bin Saadon", "Ustaz Muhammad Nor Radzie bin Bohari", "Ustaz Khairymazalee Yusri bin Jaafar", "Ustaz Sa'idan Wa Kariman bin Bahrom", "Ustaz Fathul Imam bin Achmad Junaidi", "Ustaz Nur Wafi bin Juremi", "Ustaz Usamah Al-Othmani bin Che Ismail", "Ustaz Muhammad Afham bin Sahrom", "Ustaz Nur Ikhwan bin Norahman", "Ustaz Muhammad Najib bin Sahril", "Ustazah Jamilah binti Jaffar", "Ustazah Siti Norfifi Fatihah binti Maskor", "Ustazah Norirdayani binti Mohmed Mogi", "Ustazah Azliha binti Alimin", "Ustazah Nadia binti Kandar", "Ustazah Ruzanna binti Zainal", "Ustazah Afifat binti Ahmad", "Ustazah Maidatul Atikah binti Mohamed Tamsir", "Ustazah Nor Shahidah binti Abdul Kadir", "Ustazah Siti Maryam binti Misran", "Ustazah Umi Nor Amirah binti Ahmadi", "Ustazah Syazwani binti Baini", "Ustazah Farah Izzati binti Ezuddin", "Ustazah Siti Aisyah binti Hamdan", "Ustazah Ida Amira binti Mohamad Hamdan", "Ustazah Masyamah binti Samsur", "Ustazah Nur Fatehah binti Bakri", "Ustazah Nurul Amirah binti Mohd Puadi", "Ustazah Norshakinah binti Mohd Shukor", "Ustazah Nurul Afidah binti Mohd Toridi"];
     let stats = {}, reasons = {}, $ = id => document.getElementById(id);
 
-    // Fungsi Tambahan: Hadir Semua
     const allH = (s) => {
         ahli.forEach((n, i) => { stats[n] = s; if($('c_'+i)) $('c_'+i).checked = s; });
         updAbs(); save();
@@ -96,12 +95,13 @@
 
     const load = () => {
         const d = JSON.parse(localStorage.getItem('MIA_D'));
-        if(!d) { addP("Ucapan Pengerusi"); addP("Pembentangan"); return; }
+        $('agC').innerHTML = ""; // Bersihkan sebelum load
+        if(!d) { addP("Ucapan Pengerusi"); addP("Pembentangan Buku Pengurusan"); return; }
         $('tajuk').value = d.t || ""; $('tkh').value = d.tk || ""; $('mS').value = d.ms || ""; $('mE').value = d.me || ""; $('tmpt').value = d.tm || ""; $('pntp').value = d.p || ""; reasons = d.r || {};
         if(d.abs) d.abs.forEach(n => { stats[n] = false; let idx = ahli.indexOf(n); if(idx > -1 && $('c_'+idx)) $('c_'+idx).checked = false; });
         updAbs(); 
-        $('agC').innerHTML = ""; // Kosongkan sebelum load
-        if(d.ag) d.ag.forEach(a => addP(a.t, a.c));
+        if(d.ag && d.ag.length > 0) d.ag.forEach(a => addP(a.t, a.c));
+        else { addP("Ucapan Pengerusi"); addP("Pembentangan Buku Pengurusan"); }
     };
 
     const clr = () => confirm("Padam draf?") && [localStorage.removeItem('MIA_D'), location.reload()];
@@ -112,7 +112,12 @@
         $('oT').innerText = $('tajuk').value;
         $('oM').innerText = `Tarikh: ${$('tkh').value ? hr[dt.getDay()] + ', ' + dt.getDate() + ' ' + bln[dt.getMonth()] + ' ' + dt.getFullYear() : '-'} | Masa: ${fmtM($('mS').value)} - ${fmtM($('mE').value)} | Tempat: ${$('tmpt').value}`;
         $('oH').innerHTML = ahli.filter(n => stats[n]).map((n, i) => `${i + 1}. ${n}`).join('<br>');
-        $('oA').innerHTML = ahli.filter(n => !stats[n]).map((n, i) => `<p style="margin:2px 0;">${i + 1}. ${n} (${reasons[n] || 'Tiada alasan'})</p>`).join('');
+        
+        // Logik sembunyi tajuk 2.0 dalam PDF jika tiada yang tidak hadir
+        const tak = ahli.filter(n => !stats[n]);
+        $('oA_Title').style.display = tak.length ? "block" : "none";
+        $('oA').innerHTML = tak.map((n, i) => `<p style="margin:2px 0;">${i + 1}. ${n} (${reasons[n] || 'Tiada alasan'})</p>`).join('');
+        
         $('oAg').innerHTML = Array.from(document.querySelectorAll('.agenda-box')).map((b, i) => `<div style="font-weight:bold;margin-top:10px;text-decoration:underline">3.${i + 1} ${b.querySelector('.agT').value}:</div><div style="white-space:pre-wrap;font-size:11pt;margin-top:5px">${b.querySelector('.agC').value}</div>`).join('');
         $('oP').innerText = $('pntp').value; window.print();
     };
