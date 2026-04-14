@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ms"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Penjana Minit MIA - Niskala Pawaka</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+    :root { --p: #7e22ce; --ph: #6b21a8; --bg: #f8fafc; --b: #e2e8f0; --txt: #1e293b; --m: #64748b; }
+    body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--txt); margin: 0; padding: 15px; display: flex; justify-content: center; }
+    .container { width: 100%; max-width: 800px; display: flex; flex-direction: column; }
+    .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--p); box-sizing: border-box; }
+    .header { text-align: center; padding: 10px; }
+    label { font-size: 0.8rem; font-weight: 600; color: var(--m); margin-bottom: 4px; display: block; }
+    input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--b); border-radius: 12px; font-family: inherit; font-size: 0.9rem; box-sizing: border-box; }
+    .grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 10px 0; }
+    .col { flex: 1 1 150px; }
+    .att-box { max-height: 250px; overflow-y: auto; background: #f1f5f9; padding: 10px; border-radius: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 8px; }
+    .att-item { display: flex; align-items: center; background: #fff; padding: 8px; border-radius: 8px; border: 1px solid var(--b); font-size: 0.75rem; cursor: pointer; }
+    .att-item input { width: auto; margin-right: 8px; }
+    .agenda-box { background: #f8fafc; border: 1px solid var(--b); border-radius: 15px; padding: 15px; margin-bottom: 10px; position: relative; }
+    .btn-del { position: absolute; top: 10px; right: 10px; color: #ef4444; border: none; background: none; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+    .btn { cursor: pointer; border: none; font-weight: 700; transition: 0.2s; border-radius: 12px; }
+    .btn-add { background: #f3e8ff; color: var(--p); border: 2px dashed var(--p); padding: 10px; width: 100%; margin-bottom: 15px; }
+    .btn-main { background: var(--p); color: #fff; padding: 15px; width: 100%; font-size: 1rem; box-shadow: 0 4px 12px rgba(126,34,206,0.3); margin-bottom: 10px; }
+    .btn-clr { background: #fff; color: #ef4444; border: 1.5px solid #ef4444; padding: 10px; width: 100%; font-size: 0.8rem; margin-bottom: 20px; }
+    footer { text-align: center; padding: 15px; color: #94a3b8; font-size: 0.7rem; border-top: 1px solid var(--b); margin-top: auto; }
+    #saveInd { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: #fff; padding: 8px 15px; border-radius: 20px; font-size: 0.75rem; display: none; z-index: 1000;}
+    #outputArea { display: none; }
+    @media print {
+        #formArea, #saveInd, footer { display: none; }
+        #outputArea { display: block; font-family: Arial; }
+        .p-head { text-align: center; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        .p-meta { border-top: 1.5px solid #000; border-bottom: 1.5px solid #000; padding: 8px 0; margin: 10px 0; font-weight: bold; text-align: center; font-size: 10pt; }
+        .s-title { border-left: 5px solid #000; padding-left: 10px; text-transform: uppercase; font-weight: bold; margin-top: 20px; }
+        .sig { display: flex; justify-content: space-between; margin-top: 70px; text-align: center; }
+        .sig-b { width: 45%; border-top: 2px solid #000; padding-top: 5px; font-weight: bold; }
+    }
+</style></head>
+<body oninput="save()">
+<div id="saveInd">Draf Disimpan ✓</div>
+<div class="container" id="formArea">
+    <div class="card header"><img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="60"><h2 style="color:var(--p);margin:5px 0 0 0">Penjana Minit Fleksibel MIA</h2></div>
+    <div class="card"><label>Tajuk Mesyuarat</label><input id="tajuk" value="MINIT MESYUARAT BERSAMA LEMBAGA PENGELOLA">
+        <div class="grid">
+            <div class="col"><label>Tarikh</label><input type="date" id="tkh"></div>
+            <div class="col" style="display:flex;gap:5px"><div><label>Mula</label><input type="time" id="mS"></div><div><label>Tamat</label><input type="time" id="mE"></div></div>
+            <div class="col"><label>Tempat</label><input id="tmpt" value="Bilik Mesyuarat Al-Fateh"></div>
+        </div>
+    </div>
+    <div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><h3 style="margin:0;font-size:1rem;color:var(--p)">1.0 Kehadiran</h3><button onclick="allH(true)" style="font-size:0.7rem;cursor:pointer">Hadir Semua</button></div><div class="att-box" id="aL"></div></div>
+    <div class="card" id="absC" style="display:none"><h3 style="margin:0 0 10px 0;font-size:1rem;color:#ef4444">2.0 Tidak Hadir</h3><div id="absA"></div></div>
+    <div class="card"><h3 style="margin:0 0 10px 0;font-size:1rem;color:var(--p)">3.0 Perbincangan</h3><div id="agC"></div><button class="btn btn-add" onclick="addP();save()">+ Tambah Point</button><label>4.0 Penutup</label><textarea id="pntp" rows="2"></textarea></div>
+    <button class="btn btn-main" onclick="printM()">Jana & Cetak PDF</button><button class="btn btn-clr" onclick="clr()">Kosongkan Draf</button>
+    <footer>Developed by<br><b>NISKALA PAWAKA</b></footer>
+</div>
+<div id="outputArea">
+    <div class="p-head"><img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="50"><h2 id="oT" style="text-transform:uppercase"></h2><div class="p-meta" id="oM"></div></div>
+    <div class="s-title">1.0 Kehadiran</div><div id="oH" style="column-count:2;font-size:10pt"></div>
+    <div class="s-title">2.0 Tidak Hadir Dengan Kenyataan</div><div id="oA"></div>
+    <div class="s-title">3.0 Perbincangan</div><div id="oAg"></div>
+    <div class="s-title">4.0 Penutup</div><div id="oP" style="white-space:pre-wrap;font-size:11pt"></div>
+    <div class="sig"><div class="sig-b">NADIA BINTI KANDAR<br><small>Setiausaha</small></div><div class="sig-b">TUAN HAJI MARSAN BIN OSMAN<br><small>Pengerusi</small></div></div>
+</div>
+<script>
+    const ahli = ["Tuan Haji Marsan bin Osman", "Ustaz Hazren bin Ahmad", "Ustaz Mohd Azmi bin Nurdin", "Ustaz Omar bin Yusoff", "Ustaz Muliadi bin Mohd Sadir", "Ustaz Muhammad Syahrul Afandi bin Sabran", "Ustaz Mohd Rasyid bin Mat Tusairi", "Ustaz Mohd Yazid bin Ahmad", "Ustaz Khairul Aiman bin Sahrom", "Ustaz Muhammad Sukri bin Noorrusdeen", "Ustaz Muhammad Fadzly bin Saadon", "Ustaz Muhammad Nor Radzie bin Bohari", "Ustaz Khairymazalee Yusri bin Jaafar", "Ustaz Sa'idan Wa Kariman bin Bahrom", "Ustaz Fathul Imam bin Achmad Junaidi", "Ustaz Nur Wafi bin Juremi", "Ustaz Usamah Al-Othmani bin Che Ismail", "Ustaz Muhammad Afham bin Sahrom", "Ustaz Nur Ikhwan bin Norahman", "Ustaz Muhammad Najib bin Sahril", "Ustazah Jamilah binti Jaffar", "Ustazah Siti Norfifi Fatihah binti Maskor", "Ustazah Norirdayani binti Mohmed Mogi", "Ustazah Azliha binti Alimin", "Ustazah Nadia binti Kandar", "Ustazah Ruzanna binti Zainal", "Ustazah Afifat binti Ahmad", "Ustazah Maidatul Atikah binti Mohamed Tamsir", "Ustazah Nor Shahidah binti Abdul Kadir", "Ustazah Siti Maryam binti Misran", "Ustazah Umi Nor Amirah binti Ahmadi", "Ustazah Syazwani binti Baini", "Ustazah Farah Izzati binti Ezuddin", "Ustazah Siti Aisyah binti Hamdan", "Ustazah Ida Amira binti Mohamad Hamdan", "Ustazah Masyamah binti Samsur", "Ustazah Nur Fatehah binti Bakri", "Ustazah Nurul Amirah binti Mohd Puadi", "Ustazah Norshakinah binti Mohd Shukor", "Ustazah Nurul Afidah binti Mohd Toridi"];
+    let stats = {}, reasons = {}, $ = id => document.getElementById(id);
+
+    // Fungsi Tambahan: Hadir Semua
+    const allH = (s) => {
+        ahli.forEach((n, i) => { stats[n] = s; if($('c_'+i)) $('c_'+i).checked = s; });
+        updAbs(); save();
+    };
+
+    const init = () => {
+        $('aL').innerHTML = "";
+        ahli.forEach((n, i) => { stats[n] = true; $('aL').innerHTML += `<label class="att-item"><input type="checkbox" checked onchange="stats['${n}']=this.checked;updAbs();save()" id="c_${i}">${n}</label>`; });
+        load();
+    };
+
+    const updAbs = () => {
+        const tak = ahli.filter(n => !stats[n]);
+        $('absC').style.display = tak.length ? "block" : "none";
+        $('absA').innerHTML = `<table width="100%">${tak.map(n => `<tr><td width="40%"><b>${n}</b></td><td><input placeholder="Alasan" oninput="reasons['${n}']=this.value;save()" value="${reasons[n]||''}"></td></tr>`).join('')}</table>`;
+    };
+
+    const addP = (t = "", c = "") => {
+        const cnt = $('agC').children.length + 1;
+        const div = document.createElement('div'); div.className = 'agenda-box';
+        div.innerHTML = `<button class="btn-del" onclick="this.parentElement.remove();save()">PADAM</button><label>Tajuk (3.${cnt})</label><input class="agT" value="${t}"><textarea class="agC" rows="3">${c}</textarea>`;
+        $('agC').appendChild(div);
+    };
+
+    const save = () => {
+        const data = { t: $('tajuk').value, tk: $('tkh').value, ms: $('mS').value, me: $('mE').value, tm: $('tmpt').value, p: $('pntp').value, abs: ahli.filter(n => !stats[n]), r: reasons, ag: Array.from(document.querySelectorAll('.agenda-box')).map(b => ({t: b.querySelector('.agT').value, c: b.querySelector('.agC').value})) };
+        localStorage.setItem('MIA_D', JSON.stringify(data));
+        $('saveInd').style.display = "block"; setTimeout(() => $('saveInd').style.display = "none", 1000);
+    };
+
+    const load = () => {
+        const d = JSON.parse(localStorage.getItem('MIA_D'));
+        if(!d) { addP("Ucapan Pengerusi"); addP("Pembentangan"); return; }
+        $('tajuk').value = d.t || ""; $('tkh').value = d.tk || ""; $('mS').value = d.ms || ""; $('mE').value = d.me || ""; $('tmpt').value = d.tm || ""; $('pntp').value = d.p || ""; reasons = d.r || {};
+        if(d.abs) d.abs.forEach(n => { stats[n] = false; let idx = ahli.indexOf(n); if(idx > -1 && $('c_'+idx)) $('c_'+idx).checked = false; });
+        updAbs(); 
+        $('agC').innerHTML = ""; // Kosongkan sebelum load
+        if(d.ag) d.ag.forEach(a => addP(a.t, a.c));
+    };
+
+    const clr = () => confirm("Padam draf?") && [localStorage.removeItem('MIA_D'), location.reload()];
+    const fmtM = t => { if(!t) return "-"; let [h, m] = t.split(':'); h = parseInt(h); return `${h % 12 || 12}.${m} ${h >= 12 ? (h >= 19 ? "malam" : h >= 14 ? "petang" : "tengah hari") : "pagi"}`; };
+
+    const printM = () => {
+        const dt = new Date($('tkh').value); const hr = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"], bln = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+        $('oT').innerText = $('tajuk').value;
+        $('oM').innerText = `Tarikh: ${$('tkh').value ? hr[dt.getDay()] + ', ' + dt.getDate() + ' ' + bln[dt.getMonth()] + ' ' + dt.getFullYear() : '-'} | Masa: ${fmtM($('mS').value)} - ${fmtM($('mE').value)} | Tempat: ${$('tmpt').value}`;
+        $('oH').innerHTML = ahli.filter(n => stats[n]).map((n, i) => `${i + 1}. ${n}`).join('<br>');
+        $('oA').innerHTML = ahli.filter(n => !stats[n]).map((n, i) => `<p style="margin:2px 0;">${i + 1}. ${n} (${reasons[n] || 'Tiada alasan'})</p>`).join('');
+        $('oAg').innerHTML = Array.from(document.querySelectorAll('.agenda-box')).map((b, i) => `<div style="font-weight:bold;margin-top:10px;text-decoration:underline">3.${i + 1} ${b.querySelector('.agT').value}:</div><div style="white-space:pre-wrap;font-size:11pt;margin-top:5px">${b.querySelector('.agC').value}</div>`).join('');
+        $('oP').innerText = $('pntp').value; window.print();
+    };
+
+    init();
+</script></body></html>
