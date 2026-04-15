@@ -14,7 +14,8 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
         .header { text-align: center; padding: 10px; }
         label { font-size: 0.8rem; font-weight: 600; color: var(--m); margin-bottom: 4px; display: block; }
         input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--b); border-radius: 12px; font-family: inherit; font-size: 0.9rem; box-sizing: border-box; transition: 0.2s; }
-        input:focus, textarea:focus { outline: none; border-color: var(--p); ring: 2px solid #f3e8ff; }
+
+input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow: 0 0 0 2px #f3e8ff; }
 
 .grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0; }
         .col { flex: 1 1 180px; }
@@ -29,8 +30,14 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
 .btn { cursor: pointer; border: none; font-weight: 700; transition: 0.3s; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
         .btn-add { background: #f3e8ff; color: var(--p); border: 2px dashed var(--p); padding: 12px; width: 100%; margin-bottom: 20px; }
 
+/* Butang AI Baru */
+        .btn-ai { background: linear-gradient(135deg, #7e22ce, #3b82f6); color: white; border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-top: 8px; display: inline-block; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn-ai:hover { opacity: 0.9; transform: translateY(-1px); }
+        .btn-ai:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
+
 /* Action Buttons */
         .btn-main { background: var(--p); color: #fff; padding: 18px; width: 100%; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(126,34,206,0.3); }
+        .btn-main:hover { background: var(--ph); }
         .btn-word { background: var(--w); color: #fff; padding: 14px; width: 100%; }
         .btn-copy { background: var(--s); color: #fff; padding: 14px; width: 100%; }
         .btn-clr { background: transparent; color: #94a3b8; border: 1px solid var(--b); padding: 10px; width: 100%; font-size: 0.8rem; margin-top: 10px; }
@@ -46,7 +53,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
             .p-head { text-align: center; margin-bottom: 30px; }
             .p-head h2 { font-size: 14pt; margin: 10px 0; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 10px; }
             .p-meta { display: grid; grid-template-columns: 100px 1fr; gap: 5px; margin: 15px 0; font-size: 11pt; }
-            .s-title { font-size: 12pt; background: #f0f0f0 !important; padding: 5px 10px; margin-top: 25px; font-weight: bold; border-left: 5px solid #000; text-transform: uppercase; -webkit-print-color-adjust: exact; }
+            .s-title { font-size: 12pt; background: #f0f0f0 !important; padding: 5px 10px; margin-top: 25px; font-weight: bold; border-left: 5px solid #000; text-transform: uppercase; -webkit-print-color-adjust: exact; color-adjust: exact; }
             #oH { column-count: 2; column-gap: 30px; font-size: 11pt; margin-top: 10px; }
             .ag-item { margin-top: 15px; page-break-inside: avoid; }
             .ag-head { font-weight: bold; font-size: 11pt; display: block; border-bottom: 1px solid #ddd; margin-bottom: 5px; }
@@ -67,26 +74,24 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
         <p style="font-size: 0.8rem; color: var(--m);">Sistem Pengurusan Minit Niskala Pawaka</p>
     </div>
 
-<!-- MAKLUMAT ASAS -->
-    <div class="card">
+<div class="card">
         <label>Tajuk Mesyuarat</label>
-        <input id="tajuk" placeholder="Contoh: MINIT MESYUARAT PENGURUSAN BIL 1/2024">
+        <input id="tajuk" spellcheck="true" placeholder="Contoh: MINIT MESYUARAT PENGURUSAN BIL 1/2024">
         <div class="grid">
             <div class="col"><label>Tarikh</label><input type="date" id="tkh"></div>
             <div class="col" style="display:flex; gap:8px">
                 <div style="flex:1"><label>Mula</label><input type="time" id="mS"></div>
                 <div style="flex:1"><label>Tamat</label><input type="time" id="mE"></div>
             </div>
-            <div class="col"><label>Tempat</label><input id="tmpt" value="Bilik Mesyuarat Al-Fateh"></div>
+            <div class="col"><label>Tempat</label><input id="tmpt" spellcheck="true" value="Bilik Mesyuarat Al-Fateh"></div>
         </div>
         <div class="grid">
-            <div class="col"><label>Pengerusi</label><input id="namaPengerusi" value="TUAN HAJI MARSAN BIN OSMAN"></div>
-            <div class="col"><label>Setiausaha</label><input id="namaS/U" value="NADIA BINTI KANDAR"></div>
+            <div class="col"><label>Pengerusi</label><input id="namaPengerusi" spellcheck="true" value="TUAN HAJI MARSAN BIN OSMAN"></div>
+            <div class="col"><label>Setiausaha</label><input id="namaS/U" spellcheck="true" value="NADIA BINTI KANDAR"></div>
         </div>
     </div>
 
-<!-- KEHADIRAN -->
-    <div class="card">
+<div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
             <h3 style="margin:0; font-size:1.1rem; color:var(--p)">1.0 Kehadiran</h3>
             <div>
@@ -94,23 +99,30 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
                 <button onclick="allH(false)" style="font-size:0.7rem; cursor:pointer; background:#fff; border:1px solid #ccc; border-radius:8px; padding:5px 10px; color:#666; font-weight:600">Kosongkan</button>
             </div>
         </div>
-        <div class="att-box" id="aL"></div>
+
+<div class="att-box" id="aL"></div>
+
+<div style="margin-top: 15px; display: flex; gap: 10px; background: #f8fafc; padding: 10px; border-radius: 12px; border: 1px dashed var(--b);">
+            <input id="namaAhliBaru" spellcheck="true" placeholder="Taip nama ahli baru (jika tiada dalam senarai)..." style="flex: 1; margin: 0; border: 1px solid #ccc;">
+            <button class="btn btn-add" style="width: auto; margin: 0; padding: 10px 15px;" onclick="addAhli()">+ Tambah</button>
+        </div>
     </div>
 
-<!-- TIDAK HADIR -->
-    <div class="card" id="absC" style="display:none; border-top:5px solid #ef4444">
+<div class="card" id="absC" style="display:none; border-top:5px solid #ef4444">
         <h3 style="margin:0 0 12px 0; font-size:1.1rem; color:#ef4444">2.0 Tidak Hadir Dengan Kenyataan</h3>
         <div id="absA"></div>
     </div>
 
-<!-- PERBINCANGAN -->
-    <div class="card">
+<div class="card">
         <h3 style="margin:0 0 15px 0; font-size:1.1rem; color:var(--p)">3.0 Perbincangan</h3>
         <div id="agC"></div>
         <button class="btn btn-add" onclick="addP();save()">+ Tambah Tajuk Perbincangan</button>
 
-<label style="margin-top:20px; color:var(--p)">4.0 Penutup</label>
-        <textarea id="pntp" rows="3" placeholder="Contoh: Pengerusi mengucapkan terima kasih atas kehadiran semua ahli..."></textarea>
+<div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+            <label style="color:var(--p); margin:0;">4.0 Penutup</label>
+            <button class="btn-ai" onclick="baikiAyatAI(this, document.getElementById('pntp'))">✨ AI Perkemas Ayat</button>
+        </div>
+        <textarea id="pntp" spellcheck="true" rows="3" placeholder="Contoh: Pengerusi mengucapkan terima kasih atas kehadiran semua ahli..."></textarea>
     </div>
 
 <button class="btn btn-main" onclick="printM()">🖨️ Jana & Cetak PDF Rasmi</button>
@@ -121,7 +133,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
 <footer>Developed by<br><b>NISKALA PAWAKA PREMIUM</b></footer>
 </div>
 
-<!-- TEMPLATE OUTPUT (UNTUK CETAKAN) -->
 <div id="outputArea">
     <div class="p-head">
         <img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="80">
@@ -150,30 +161,104 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
 </div>
 
 <script>
-    const ahli = ["Tuan Haji Marsan bin Osman", "Ustaz Hazren bin Ahmad", "Ustaz Mohd Azmi bin Nurdin", "Ustaz Omar bin Yusoff", "Ustaz Muliadi bin Mohd Sadir", "Ustaz Muhammad Syahrul Afandi bin Sabran", "Ustaz Mohd Rasyid bin Mat Tusairi", "Ustaz Mohd Yazid bin Ahmad", "Ustaz Khairul Aiman bin Sahrom", "Ustaz Muhammad Sukri bin Noorrusdeen", "Ustaz Muhammad Fadzly bin Saadon", "Ustaz Muhammad Nor Radzie bin Bohari", "Ustaz Khairymazalee Yusri bin Jaafar", "Ustaz Sa'idan Wa Kariman bin Bahrom", "Ustaz Fathul Imam bin Achmad Junaidi", "Ustaz Nur Wafi bin Juremi", "Ustaz Usamah Al-Othmani bin Che Ismail", "Ustaz Muhammad Afham bin Sahrom", "Ustaz Nur Ikhwan bin Norahman", "Ustaz Muhammad Najib bin Sahril", "Ustazah Jamilah binti Jaffar", "Ustazah Siti Norfifi Fatihah binti Maskor", "Ustazah Norirdayani binti Mohmed Mogi", "Ustazah Azliha binti Alimin", "Ustazah Nadia binti Kandar", "Ustazah Ruzanna binti Zainal", "Ustazah Afifat binti Ahmad", "Ustazah Maidatul Atikah binti Mohamed Tamsir", "Ustazah Nor Shahidah binti Abdul Kadir", "Ustazah Siti Maryam binti Misran", "Ustazah Umi Nor Amirah binti Ahmadi", "Ustazah Syazwani binti Baini", "Ustazah Farah Izzati binti Ezuddin", "Ustazah Siti Aisyah binti Hamdan", "Ustazah Ida Amira binti Mohamad Hamdan", "Ustazah Masyamah binti Samsur", "Ustazah Nur Fatehah binti Bakri", "Ustazah Nurul Amirah binti Mohd Puadi", "Ustazah Norshakinah binti Mohd Shukor", "Ustazah Nurul Afidah binti Mohd Toridi"];
+    // ==========================================
+    // MASUKKAN API KEY ANDA DI SINI
+    // ==========================================
+    const GEMINI_API_KEY = "AIzaSyCmaov8XKIjwGmJjskpb8Nh4Gvi_bAZl4E";
     
+    // Fungsi Memanggil AI untuk membetulkan ayat
+    async function baikiAyatAI(btnElement, textareaElement) {
+        const teksAsal = textareaElement.value.trim();
+        
+        if (!teksAsal) return alert("Sila masukkan sedikit teks draf terlebih dahulu sebelum menggunakan AI.");
+        if (GEMINI_API_KEY === "LETAK_API_KEY_ANDA_DI_SINI") return alert("Sila masukkan API Key Gemini di dalam fail kod HTML ini.");
+
+        // Tukar status butang
+        const teksButangAsal = btnElement.innerText;
+        btnElement.innerText = "⏳ Sedang memproses...";
+        btnElement.disabled = true;
+
+        const promptArahan = `Sila betulkan tatabahasa, ejaan, dan struktur ayat berikut supaya menjadi laras bahasa rasmi dan profesional untuk minit mesyuarat. JANGAN tambah sebarang penerangan tambahan, JANGAN ubah konteks asal, HANYA berikan teks yang telah dibaiki sahaja:\n\n${teksAsal}`;
+
+        try {
+            const respon = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: promptArahan }] }]
+                })
+            });
+
+            const data = await respon.json();
+            
+            if (data.candidates && data.candidates.length > 0) {
+                // Masukkan teks yang dibetulkan ke dalam kotak
+                textareaElement.value = data.candidates[0].content.parts[0].text.trim();
+                save(); // Simpan ke local storage
+            } else {
+                alert("Gagal memproses teks. Sila pastikan API Key sah dan kuota mencukupi.");
+            }
+        } catch (ralat) {
+            alert("Ralat sambungan AI: " + ralat.message);
+        } finally {
+            // Kembalikan butang ke asal
+            btnElement.innerText = teksButangAsal;
+            btnElement.disabled = false;
+        }
+    }
+    // ==========================================
+
+    const defaultAhli = ["Tuan Haji Marsan bin Osman", "Ustaz Hazren bin Ahmad", "Ustaz Mohd Azmi bin Nurdin", "Ustaz Omar bin Yusoff", "Ustaz Muliadi bin Mohd Sadir", "Ustaz Muhammad Syahrul Afandi bin Sabran", "Ustaz Mohd Rasyid bin Mat Tusairi", "Ustaz Mohd Yazid bin Ahmad", "Ustaz Khairul Aiman bin Sahrom", "Ustaz Muhammad Sukri bin Noorrusdeen", "Ustaz Muhammad Fadzly bin Saadon", "Ustaz Muhammad Nor Radzie bin Bohari", "Ustaz Khairymazalee Yusri bin Jaafar", "Ustaz Sa'idan Wa Kariman bin Bahrom", "Ustaz Fathul Imam bin Achmad Junaidi", "Ustaz Nur Wafi bin Juremi", "Ustaz Usamah Al-Othmani bin Che Ismail", "Ustaz Muhammad Afham bin Sahrom", "Ustaz Nur Ikhwan bin Norahman", "Ustaz Muhammad Najib bin Sahril", "Ustazah Jamilah binti Jaffar", "Ustazah Siti Norfifi Fatihah binti Maskor", "Ustazah Norirdayani binti Mohmed Mogi", "Ustazah Azliha binti Alimin", "Ustazah Nadia binti Kandar", "Ustazah Ruzanna binti Zainal", "Ustazah Afifat binti Ahmad", "Ustazah Maidatul Atikah binti Mohamed Tamsir", "Ustazah Nor Shahidah binti Abdul Kadir", "Ustazah Siti Maryam binti Misran", "Ustazah Umi Nor Amirah binti Ahmadi", "Ustazah Syazwani binti Baini", "Ustazah Farah Izzati binti Ezuddin", "Ustazah Siti Aisyah binti Hamdan", "Ustazah Ida Amira binti Mohamad Hamdan", "Ustazah Masyamah binti Samsur", "Ustazah Nur Fatehah binti Bakri", "Ustazah Nurul Amirah binti Mohd Puadi", "Ustazah Norshakinah binti Mohd Shukor", "Ustazah Nurul Afidah binti Mohd Toridi"];
+    
+    let ahli = [];
     let stats = {}, reasons = {}, saveTimeout;
     const $ = id => document.getElementById(id);
+
+    const init = () => { load(); };
+
+    const renderAhli = () => {
+        $('aL').innerHTML = "";
+        ahli.forEach((n, i) => { 
+            if(stats[n] === undefined) stats[n] = true;
+            $('aL').innerHTML += `<label class="att-item"><input type="checkbox" ${stats[n] ? 'checked' : ''} onchange="tgl(${i})" id="c_${i}">${n}</label>`; 
+        });
+        updAbs();
+    };
+
+    const addAhli = () => {
+        const input = $('namaAhliBaru');
+        const namaBaru = input.value.trim();
+        
+        if (!namaBaru) return alert("Sila taipkan nama ahli terlebih dahulu.");
+        if (ahli.includes(namaBaru)) return alert("Nama ahli ini sudah ada dalam senarai!");
+
+        ahli.push(namaBaru); 
+        stats[namaBaru] = true; 
+        input.value = ""; 
+        renderAhli(); 
+        save(); 
+    };
 
     const tgl = (i) => { stats[ahli[i]] = $('c_'+i).checked; updAbs(); save(); };
     const allH = (s) => { ahli.forEach((n, i) => { stats[n] = s; if($('c_'+i)) $('c_'+i).checked = s; }); updAbs(); save(); };
 
-    const init = () => {
-        $('aL').innerHTML = "";
-        ahli.forEach((n, i) => { stats[n] = true; $('aL').innerHTML += `<label class="att-item"><input type="checkbox" checked onchange="tgl(${i})" id="c_${i}">${n}</label>`; });
-        load();
-    };
-
     const updAbs = () => {
         const tak = ahli.filter(n => !stats[n]);
         $('absC').style.display = tak.length ? "block" : "none";
-        $('absA').innerHTML = `<table width="100%">${tak.map(n => `<tr><td width="40%" style="font-size:0.9rem"><b>${n}</b></td><td><input placeholder="Alasan" oninput="reasons['${n}']=this.value;save()" value="${reasons[n]||''}"></td></tr>`).join('')}</table>`;
+        $('absA').innerHTML = `<table width="100%">${tak.map(n => `<tr><td width="40%" style="font-size:0.9rem"><b>${n}</b></td><td><input spellcheck="true" placeholder="Alasan" oninput="reasons['${n}']=this.value;save()" value="${reasons[n]||''}"></td></tr>`).join('')}</table>`;
     };
 
     const addP = (t = "", c = "") => {
         const div = document.createElement('div'); 
         div.className = 'agenda-box';
-        div.innerHTML = `<button class="btn-del" onclick="this.parentElement.remove();reindexAgenda();save()">PADAM</button><label class="ag-num">Tajuk Point</label><input class="agT" value="${t}" placeholder="Tajuk"><textarea class="agC" rows="3" style="margin-top:8px" placeholder="Ringkasan...">${c}</textarea>`;
+        // HTML untuk ruangan perbincangan berserta Butang AI
+        div.innerHTML = `
+            <button class="btn-del" onclick="this.parentElement.remove();reindexAgenda();save()">PADAM</button>
+            <label class="ag-num">Tajuk Point</label>
+            <input class="agT" spellcheck="true" value="${t}" placeholder="Tajuk">
+            <textarea class="agC" spellcheck="true" rows="3" style="margin-top:8px" placeholder="Ringkasan (Taip draf kasar anda di sini...)">${c}</textarea>
+            <button class="btn-ai" onclick="baikiAyatAI(this, this.previousElementSibling)">✨ AI Perkemas Ayat</button>
+        `;
         $('agC').appendChild(div);
         reindexAgenda();
     };
@@ -186,6 +271,7 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
             const data = { 
                 t: $('tajuk').value, tk: $('tkh').value, ms: $('mS').value, me: $('mE').value, tm: $('tmpt').value, 
                 p: $('pntp').value, nP: $('namaPengerusi').value, nS: $('namaS/U').value,
+                customAhli: ahli, 
                 abs: ahli.filter(n => !stats[n]), r: reasons, 
                 ag: Array.from(document.querySelectorAll('.agenda-box')).map(b => ({t: b.querySelector('.agT').value, c: b.querySelector('.agC').value})) 
             };
@@ -197,16 +283,30 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
 
     const load = () => {
         const d = JSON.parse(localStorage.getItem('MIA_PRO_V3'));
-        if(!d) { addP("Perutusan Pengerusi"); addP("Pengesahan Minit Lalu"); return; }
+        if(!d) { 
+            ahli = [...defaultAhli]; 
+            addP("Perutusan Pengerusi"); 
+            addP("Pengesahan Minit Lalu"); 
+            renderAhli();
+            return; 
+        }
+        
+        ahli = d.customAhli && d.customAhli.length > 0 ? d.customAhli : [...defaultAhli];
+        ahli.forEach(n => stats[n] = true); 
+        
         $('tajuk').value = d.t||""; $('tkh').value = d.tk||""; $('mS').value = d.ms||""; $('mE').value = d.me||""; $('tmpt').value = d.tm||""; 
         $('pntp').value = d.p||""; $('namaPengerusi').value = d.nP||""; $('namaS/U').value = d.nS||"";
         reasons = d.r || {};
-        d.abs.forEach(n => { stats[n] = false; let idx = ahli.indexOf(n); if(idx > -1 && $('c_'+idx)) $('c_'+idx).checked = false; });
-        updAbs(); $('agC').innerHTML = "";
+        
+        if(d.abs) d.abs.forEach(n => { stats[n] = false; }); 
+        
+        renderAhli(); 
+        
+        $('agC').innerHTML = "";
         if(d.ag) d.ag.forEach(a => addP(a.t, a.c));
     };
 
-    const clr = () => confirm("Padam draf?") && [localStorage.removeItem('MIA_PRO_V3'), location.reload()];
+    const clr = () => confirm("Adakah anda pasti mahu memadam semua draf dan senarai ahli tambahan?") && [localStorage.removeItem('MIA_PRO_V3'), location.reload()];
     
     const fmtM = t => { 
         if(!t) return "-"; let [h, m] = t.split(':'); h = parseInt(h); 
@@ -214,7 +314,6 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
         return `${h % 12 || 12}.${m} ${suf}`; 
     };
 
-    // JANA FORMAT .DOCS (WORD)
     const downloadDocs = () => {
         const valTkh = $('tkh').value;
         let tStr = valTkh || "-";
@@ -276,14 +375,23 @@ body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--t
 
     const copyM = () => {
         let txt = `*${($('tajuk').value || "MINIT MESYUARAT").toUpperCase()}*\n\n`;
-        txt += `Tarikh: ${$('tkh').value}\n`;
+        txt += `Tarikh: ${$('tkh').value || "-"}\n`;
         txt += `Masa: ${fmtM($('mS').value)} - ${fmtM($('mE').value)}\n\n`;
         txt += `*1.0 KEHADIRAN*\n`;
+        
         ahli.filter(n => stats[n]).forEach((n, i) => txt += `${i+1}. ${n}\n`);
+        
+        const tak = ahli.filter(n => !stats[n]);
+        if(tak.length) {
+            txt += `\n*2.0 TIDAK HADIR DENGAN KENYATAAN*\n`;
+            tak.forEach((n, i) => txt += `${i+1}. ${n} (${reasons[n] || 'Bersebab'})\n`);
+        }
+
         txt += `\n*3.0 PERBINCANGAN*\n`;
         document.querySelectorAll('.agenda-box').forEach((b, i) => {
             txt += `3.${i+1} ${b.querySelector('.agT').value.toUpperCase()}\n${b.querySelector('.agC').value}\n\n`;
         });
+        
         navigator.clipboard.writeText(txt).then(() => {
             $('saveInd').innerText = "Teks WhatsApp Disalin! 📋";
             $('saveInd').style.display = "block"; setTimeout(() => $('saveInd').style.display = "none", 2000);
