@@ -3,80 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Penjana Minit MIA - Niskala Pawaka Premium</title>
+    <title>Penjana Minit MIA - Premium</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root { --p: #7e22ce; --ph: #6b21a8; --bg: #f8fafc; --b: #e2e8f0; --txt: #1e293b; --m: #64748b; }
+        :root { --p: #7e22ce; --ph: #6b21a8; --bg: #f8fafc; --b: #e2e8f0; --txt: #1e293b; --m: #64748b; --s: #10b981; --w: #2b579a; }
 
-/* UI STYLING */
-        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--txt); margin: 0; padding: 15px; display: flex; justify-content: center; }
+body { font-family: 'Poppins', sans-serif; background: var(--bg); color: var(--txt); margin: 0; padding: 15px; display: flex; justify-content: center; }
         .container { width: 100%; max-width: 850px; display: flex; flex-direction: column; }
         .card { background: #fff; border-radius: 20px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--p); box-sizing: border-box; }
         .header { text-align: center; padding: 10px; }
         label { font-size: 0.8rem; font-weight: 600; color: var(--m); margin-bottom: 4px; display: block; }
-        input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--b); border-radius: 12px; font-family: inherit; font-size: 0.9rem; box-sizing: border-box; }
-        .grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0; }
-        .col { flex: 1 1 180px; }
-        .att-box { max-height: 250px; overflow-y: auto; background: #f1f5f9; padding: 15px; border-radius: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
-        .att-item { display: flex; align-items: center; background: #fff; padding: 8px; border-radius: 8px; border: 1px solid var(--b); font-size: 0.75rem; cursor: pointer; transition: 0.2s; }
-        .att-item:hover { border-color: var(--p); }
-        .att-item input { width: auto; margin-right: 8px; cursor: pointer; }
-        .agenda-box { background: #f8fafc; border: 1px solid var(--b); border-radius: 15px; padding: 15px; margin-bottom: 15px; position: relative; }
-        .btn-del { position: absolute; top: 12px; right: 12px; color: #ef4444; border: none; background: #fee2e2; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 0.65rem; font-weight: bold; }
-        .btn { cursor: pointer; border: none; font-weight: 700; transition: 0.2s; border-radius: 12px; }
-        .btn-add { background: #f3e8ff; color: var(--p); border: 2px dashed var(--p); padding: 12px; width: 100%; margin-bottom: 20px; }
-        .btn-main { background: var(--p); color: #fff; padding: 18px; width: 100%; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(126,34,206,0.3); margin-bottom: 12px; }
-        .btn-clr { background: #fff; color: #ef4444; border: 1.5px solid #ef4444; padding: 10px; width: 100%; font-size: 0.85rem; margin-bottom: 30px; }
-        footer { text-align: center; padding: 20px; color: #94a3b8; font-size: 0.8rem; border-top: 1px solid var(--b); margin-top: auto; }
-        #saveInd { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #10b981; color: #fff; padding: 10px 20px; border-radius: 30px; font-size: 0.8rem; display: none; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        input, textarea { width: 100%; padding: 10px; border: 1.5px solid var(--b); border-radius: 12px; font-family: inherit; font-size: 0.9rem; box-sizing: border-box; transition: 0.2s; }
+        input:focus, textarea:focus { outline: none; border-color: var(--p); ring: 2px solid #f3e8ff; }
 
-/* PRINT / OUTPUT STYLING (MODERN PROFESSIONAL) */
+.grid { display: flex; flex-wrap: wrap; gap: 12px; margin: 10px 0; }
+        .col { flex: 1 1 180px; }
+
+.att-box { max-height: 300px; overflow-y: auto; background: #f1f5f9; padding: 15px; border-radius: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+        .att-item { display: flex; align-items: center; background: #fff; padding: 10px; border-radius: 10px; border: 1px solid var(--b); font-size: 0.8rem; cursor: pointer; }
+        .att-item input { width: auto; margin-right: 10px; transform: scale(1.2); }
+
+.agenda-box { background: #f8fafc; border: 1px solid var(--b); border-radius: 15px; padding: 15px; margin-bottom: 15px; position: relative; }
+        .btn-del { position: absolute; top: 12px; right: 12px; color: #ef4444; border: none; background: #fee2e2; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
+
+.btn { cursor: pointer; border: none; font-weight: 700; transition: 0.3s; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .btn-add { background: #f3e8ff; color: var(--p); border: 2px dashed var(--p); padding: 12px; width: 100%; margin-bottom: 20px; }
+
+/* Action Buttons */
+        .btn-main { background: var(--p); color: #fff; padding: 18px; width: 100%; font-size: 1.1rem; box-shadow: 0 4px 12px rgba(126,34,206,0.3); }
+        .btn-word { background: var(--w); color: #fff; padding: 14px; width: 100%; }
+        .btn-copy { background: var(--s); color: #fff; padding: 14px; width: 100%; }
+        .btn-clr { background: transparent; color: #94a3b8; border: 1px solid var(--b); padding: 10px; width: 100%; font-size: 0.8rem; margin-top: 10px; }
+
+#saveInd { position: fixed; bottom: 20px; right: 20px; background: #333; color: #fff; padding: 10px 20px; border-radius: 12px; font-size: 0.8rem; display: none; z-index: 2000; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+
+/* PRINT STYLING */
         #outputArea { display: none; }
         @media print {
-            #formArea, #saveInd, footer { display: none; }
-            #outputArea { display: block; font-family: Arial, sans-serif; color: #1a202c; }
-            .p-head { text-align: center; margin-bottom: 20px; }
-            .p-head h2 { font-size: 16pt; margin: 10px 0; color: #000; text-transform: uppercase; }
-
-/* Box Info Modern */
-            .p-meta { 
-                background: #f8fafc !important; border: 1px solid #e2e8f0; padding: 15px; 
-                margin: 20px 0; border-radius: 8px; display: grid; grid-template-columns: 1fr 1fr; 
-                text-align: left; font-size: 10pt; gap: 8px;
-            }
-
-/* Section Title Modern */
-            .s-title { 
-                font-size: 11pt; color: #000; background: #f1f5f9 !important; padding: 8px 12px; 
-                margin-top: 25px; font-weight: bold; border-left: 5px solid #7e22ce; text-transform: uppercase;
-            }
-
-/* Attendance 3 Columns */
-            #oH { column-count: 3; column-gap: 20px; font-size: 9pt; margin-top: 15px; line-height: 1.6; }
-
-/* Agenda List Modern */
-            .ag-item { margin-top: 18px; page-break-inside: avoid; }
-            .ag-head { font-weight: bold; font-size: 11pt; color: #7e22ce; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 4px; margin-bottom: 6px; display: block; }
-            .ag-body { font-size: 10.5pt; line-height: 1.7; text-align: justify; white-space: pre-wrap; padding-left: 2px; }
-
-.sig { display: flex; justify-content: space-between; margin-top: 70px; }
-            .sig-b { width: 42%; border-top: 1.5px solid #000; padding-top: 10px; font-weight: bold; text-align: center; font-size: 10.5pt; text-transform: uppercase; }
+            @page { margin: 2.5cm; }
+            #formArea, #saveInd, footer { display: none !important; }
+            #outputArea { display: block !important; font-family: "Times New Roman", Times, serif; color: #000; line-height: 1.5; }
+            .p-head { text-align: center; margin-bottom: 30px; }
+            .p-head h2 { font-size: 14pt; margin: 10px 0; text-transform: uppercase; border-bottom: 2px solid #000; padding-bottom: 10px; }
+            .p-meta { display: grid; grid-template-columns: 100px 1fr; gap: 5px; margin: 15px 0; font-size: 11pt; }
+            .s-title { font-size: 12pt; background: #f0f0f0 !important; padding: 5px 10px; margin-top: 25px; font-weight: bold; border-left: 5px solid #000; text-transform: uppercase; -webkit-print-color-adjust: exact; }
+            #oH { column-count: 2; column-gap: 30px; font-size: 11pt; margin-top: 10px; }
+            .ag-item { margin-top: 15px; page-break-inside: avoid; }
+            .ag-head { font-weight: bold; font-size: 11pt; display: block; border-bottom: 1px solid #ddd; margin-bottom: 5px; }
+            .ag-body { font-size: 11pt; text-align: justify; white-space: pre-wrap; padding-left: 5px; }
+            .sig { display: flex; justify-content: space-between; margin-top: 80px; page-break-inside: avoid; }
+            .sig-b { width: 45%; border-top: 1px solid #000; padding-top: 8px; font-weight: bold; text-align: center; font-size: 11pt; text-transform: uppercase; }
         }
     </style>
 </head>
 <body oninput="save()">
 
-<div id="saveInd">Draf Berjaya Disimpan ✓</div>
+<div id="saveInd">Draf Disimpan ✓</div>
 
 <div class="container" id="formArea">
     <div class="card header">
-        <img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="70">
-        <h2 style="color:var(--p); margin:10px 0 0 0">Penjana Minit Fleksibel MIA</h2>
+        <img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="70" alt="LOGO MIA">
+        <h2 style="color:var(--p); margin:10px 0 0 0">Penjana Minit Mesyuarat MIA</h2>
+        <p style="font-size: 0.8rem; color: var(--m);">Sistem Pengurusan Minit Niskala Pawaka</p>
     </div>
 
-<div class="card">
+<!-- MAKLUMAT ASAS -->
+    <div class="card">
         <label>Tajuk Mesyuarat</label>
-        <input id="tajuk" value="MINIT MESYUARAT BERSAMA LEMBAGA PENGELOLA">
+        <input id="tajuk" placeholder="Contoh: MINIT MESYUARAT PENGURUSAN BIL 1/2024">
         <div class="grid">
             <div class="col"><label>Tarikh</label><input type="date" id="tkh"></div>
             <div class="col" style="display:flex; gap:8px">
@@ -85,155 +79,239 @@
             </div>
             <div class="col"><label>Tempat</label><input id="tmpt" value="Bilik Mesyuarat Al-Fateh"></div>
         </div>
+        <div class="grid">
+            <div class="col"><label>Pengerusi</label><input id="namaPengerusi" value="TUAN HAJI MARSAN BIN OSMAN"></div>
+            <div class="col"><label>Setiausaha</label><input id="namaS/U" value="NADIA BINTI KANDAR"></div>
+        </div>
     </div>
 
-<div class="card">
+<!-- KEHADIRAN -->
+    <div class="card">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px">
             <h3 style="margin:0; font-size:1.1rem; color:var(--p)">1.0 Kehadiran</h3>
-            <button onclick="allH(true)" style="font-size:0.75rem; cursor:pointer; background:#f3e8ff; border:1px solid var(--p); border-radius:8px; padding:4px 12px; color:var(--p); font-weight:600">Hadir Semua</button>
+            <div>
+                <button onclick="allH(true)" style="font-size:0.7rem; cursor:pointer; background:#f3e8ff; border:1px solid var(--p); border-radius:8px; padding:5px 10px; color:var(--p); font-weight:600">Pilih Semua</button>
+                <button onclick="allH(false)" style="font-size:0.7rem; cursor:pointer; background:#fff; border:1px solid #ccc; border-radius:8px; padding:5px 10px; color:#666; font-weight:600">Kosongkan</button>
+            </div>
         </div>
         <div class="att-box" id="aL"></div>
     </div>
 
-<div class="card" id="absC" style="display:none; border-top:5px solid #ef4444">
+<!-- TIDAK HADIR -->
+    <div class="card" id="absC" style="display:none; border-top:5px solid #ef4444">
         <h3 style="margin:0 0 12px 0; font-size:1.1rem; color:#ef4444">2.0 Tidak Hadir Dengan Kenyataan</h3>
         <div id="absA"></div>
     </div>
 
-<div class="card">
+<!-- PERBINCANGAN -->
+    <div class="card">
         <h3 style="margin:0 0 15px 0; font-size:1.1rem; color:var(--p)">3.0 Perbincangan</h3>
         <div id="agC"></div>
         <button class="btn btn-add" onclick="addP();save()">+ Tambah Tajuk Perbincangan</button>
-        <label style="margin-top:10px; color:var(--p)">4.0 Penutup</label>
-        <textarea id="pntp" rows="2" placeholder="Ucapan penangguhan mesyuarat..."></textarea>
+
+<label style="margin-top:20px; color:var(--p)">4.0 Penutup</label>
+        <textarea id="pntp" rows="3" placeholder="Contoh: Pengerusi mengucapkan terima kasih atas kehadiran semua ahli..."></textarea>
     </div>
 
-<button class="btn btn-main" onclick="printM()">Jana & Cetak PDF Rasmi</button>
-    <button class="btn btn-clr" onclick="clr()">Kosongkan Draf Mesyuarat Baru</button>
+<button class="btn btn-main" onclick="printM()">🖨️ Jana & Cetak PDF Rasmi</button>
+    <button class="btn btn-word" onclick="downloadDocs()">📝 Muat Turun Format .DOCS (Word)</button>
+    <button class="btn btn-copy" onclick="copyM()">📋 Salin Teks (WhatsApp)</button>
+    <button class="btn btn-clr" onclick="clr()">🗑️ Padam Semua Draf</button>
 
-<footer>Developed by<br><b>NISKALA PAWAKA</b></footer>
+<footer>Developed by<br><b>NISKALA PAWAKA PREMIUM</b></footer>
 </div>
 
-<!-- TEMPLATE OUTPUT MODEREN -->
+<!-- TEMPLATE OUTPUT (UNTUK CETAKAN) -->
 <div id="outputArea">
     <div class="p-head">
-        <img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="55">
+        <img src="https://arleta.site/interactivelink/1610/LOGO-MIA.png" height="80">
         <h2 id="oT"></h2>
-        <div class="p-meta" id="oM"></div>
     </div>
-
-<div class="s-title">1.0 Kehadiran</div>
+    <div class="p-meta">
+        <b>TARIKH</b><span id="oTk"></span>
+        <b>MASA</b><span id="oMs"></span>
+        <b>TEMPAT</b><span id="oTp"></span>
+        <b>PENGERUSI</b><span id="oPg"></span>
+    </div>
+    <div class="s-title">1.0 Kehadiran</div>
     <div id="oH"></div>
-
-<div id="oA_Sec" style="display:none">
+    <div id="oA_Sec" style="display:none">
         <div class="s-title">2.0 Tidak Hadir Dengan Kenyataan</div>
-        <div id="oA" style="margin-top:10px; font-size:10.5pt"></div>
+        <div id="oA" style="margin-top:10px;"></div>
     </div>
-
-<div class="s-title">3.0 Perbincangan</div>
+    <div class="s-title">3.0 Perbincangan</div>
     <div id="oAg"></div>
-
-<div class="s-title">4.0 Penutup</div>
-    <div id="oP" style="white-space:pre-wrap; font-size:11pt; margin-top:10px; line-height:1.6"></div>
-
-<div class="sig">
-        <div class="sig-b">NADIA BINTI KANDAR<br><small style="font-weight:normal">Setiausaha Mesyuarat</small></div>
-        <div class="sig-b">TUAN HAJI MARSAN BIN OSMAN<br><small style="font-weight:normal">Pengerusi Lembaga Pengelola</small></div>
+    <div class="s-title">4.0 Penutup</div>
+    <div id="oP" style="white-space:pre-wrap; margin-top:10px;"></div>
+    <div class="sig">
+        <div class="sig-b"><span id="sigSU"></span><br><span style="font-weight:normal; font-size:10pt">Setiausaha Mesyuarat</span></div>
+        <div class="sig-b"><span id="sigPG"></span><br><span style="font-weight:normal; font-size:10pt">Pengerusi Mesyuarat</span></div>
     </div>
 </div>
 
 <script>
     const ahli = ["Tuan Haji Marsan bin Osman", "Ustaz Hazren bin Ahmad", "Ustaz Mohd Azmi bin Nurdin", "Ustaz Omar bin Yusoff", "Ustaz Muliadi bin Mohd Sadir", "Ustaz Muhammad Syahrul Afandi bin Sabran", "Ustaz Mohd Rasyid bin Mat Tusairi", "Ustaz Mohd Yazid bin Ahmad", "Ustaz Khairul Aiman bin Sahrom", "Ustaz Muhammad Sukri bin Noorrusdeen", "Ustaz Muhammad Fadzly bin Saadon", "Ustaz Muhammad Nor Radzie bin Bohari", "Ustaz Khairymazalee Yusri bin Jaafar", "Ustaz Sa'idan Wa Kariman bin Bahrom", "Ustaz Fathul Imam bin Achmad Junaidi", "Ustaz Nur Wafi bin Juremi", "Ustaz Usamah Al-Othmani bin Che Ismail", "Ustaz Muhammad Afham bin Sahrom", "Ustaz Nur Ikhwan bin Norahman", "Ustaz Muhammad Najib bin Sahril", "Ustazah Jamilah binti Jaffar", "Ustazah Siti Norfifi Fatihah binti Maskor", "Ustazah Norirdayani binti Mohmed Mogi", "Ustazah Azliha binti Alimin", "Ustazah Nadia binti Kandar", "Ustazah Ruzanna binti Zainal", "Ustazah Afifat binti Ahmad", "Ustazah Maidatul Atikah binti Mohamed Tamsir", "Ustazah Nor Shahidah binti Abdul Kadir", "Ustazah Siti Maryam binti Misran", "Ustazah Umi Nor Amirah binti Ahmadi", "Ustazah Syazwani binti Baini", "Ustazah Farah Izzati binti Ezuddin", "Ustazah Siti Aisyah binti Hamdan", "Ustazah Ida Amira binti Mohamad Hamdan", "Ustazah Masyamah binti Samsur", "Ustazah Nur Fatehah binti Bakri", "Ustazah Nurul Amirah binti Mohd Puadi", "Ustazah Norshakinah binti Mohd Shukor", "Ustazah Nurul Afidah binti Mohd Toridi"];
     
-    let stats = {}, reasons = {}, $ = id => document.getElementById(id);
+    let stats = {}, reasons = {}, saveTimeout;
+    const $ = id => document.getElementById(id);
 
-    // Fungsi Toggle Index (Sangat Penting untuk nama Sa'idan)
-    const tgl = (i) => {
-        stats[ahli[i]] = $('c_'+i).checked;
-        updAbs(); save();
-    };
-
-    const allH = (s) => {
-        ahli.forEach((n, i) => { stats[n] = s; if($('c_'+i)) $('c_'+i).checked = s; });
-        updAbs(); save();
-    };
+    const tgl = (i) => { stats[ahli[i]] = $('c_'+i).checked; updAbs(); save(); };
+    const allH = (s) => { ahli.forEach((n, i) => { stats[n] = s; if($('c_'+i)) $('c_'+i).checked = s; }); updAbs(); save(); };
 
     const init = () => {
         $('aL').innerHTML = "";
-        ahli.forEach((n, i) => { 
-            stats[n] = true; 
-            $('aL').innerHTML += `<label class="att-item"><input type="checkbox" checked onchange="tgl(${i})" id="c_${i}">${n}</label>`; 
-        });
+        ahli.forEach((n, i) => { stats[n] = true; $('aL').innerHTML += `<label class="att-item"><input type="checkbox" checked onchange="tgl(${i})" id="c_${i}">${n}</label>`; });
         load();
     };
 
     const updAbs = () => {
         const tak = ahli.filter(n => !stats[n]);
         $('absC').style.display = tak.length ? "block" : "none";
-        $('absA').innerHTML = `<table width="100%">${tak.map(n => `<tr><td width="40%"><b>${n}</b></td><td><input placeholder="Alasan (Cth: Urusan Butik)" oninput="reasons['${n}']=this.value;save()" value="${reasons[n]||''}"></td></tr>`).join('')}</table>`;
+        $('absA').innerHTML = `<table width="100%">${tak.map(n => `<tr><td width="40%" style="font-size:0.9rem"><b>${n}</b></td><td><input placeholder="Alasan" oninput="reasons['${n}']=this.value;save()" value="${reasons[n]||''}"></td></tr>`).join('')}</table>`;
     };
 
     const addP = (t = "", c = "") => {
-        const cnt = $('agC').children.length + 1;
-        const div = document.createElement('div'); div.className = 'agenda-box';
-        div.innerHTML = `<button class="btn-del" onclick="this.parentElement.remove();save()">PADAM</button><label>Tajuk Point (3.${cnt})</label><input class="agT" value="${t}" placeholder="Cth: Ucapan Pengerusi"><textarea class="agC" rows="3" placeholder="Isi perbincangan...">${c}</textarea>`;
+        const div = document.createElement('div'); 
+        div.className = 'agenda-box';
+        div.innerHTML = `<button class="btn-del" onclick="this.parentElement.remove();reindexAgenda();save()">PADAM</button><label class="ag-num">Tajuk Point</label><input class="agT" value="${t}" placeholder="Tajuk"><textarea class="agC" rows="3" style="margin-top:8px" placeholder="Ringkasan...">${c}</textarea>`;
         $('agC').appendChild(div);
+        reindexAgenda();
     };
 
+    const reindexAgenda = () => { document.querySelectorAll('.ag-num').forEach((l, i) => { l.innerText = `Tajuk Point (3.${i+1})`; }); };
+
     const save = () => {
-        const data = { t: $('tajuk').value, tk: $('tkh').value, ms: $('mS').value, me: $('mE').value, tm: $('tmpt').value, p: $('pntp').value, abs: ahli.filter(n => !stats[n]), r: reasons, ag: Array.from(document.querySelectorAll('.agenda-box')).map(b => ({t: b.querySelector('.agT').value, c: b.querySelector('.agC').value})) };
-        localStorage.setItem('MIA_D_V2', JSON.stringify(data));
-        $('saveInd').style.display = "block"; setTimeout(() => $('saveInd').style.display = "none", 1200);
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(() => {
+            const data = { 
+                t: $('tajuk').value, tk: $('tkh').value, ms: $('mS').value, me: $('mE').value, tm: $('tmpt').value, 
+                p: $('pntp').value, nP: $('namaPengerusi').value, nS: $('namaS/U').value,
+                abs: ahli.filter(n => !stats[n]), r: reasons, 
+                ag: Array.from(document.querySelectorAll('.agenda-box')).map(b => ({t: b.querySelector('.agT').value, c: b.querySelector('.agC').value})) 
+            };
+            localStorage.setItem('MIA_PRO_V3', JSON.stringify(data));
+            $('saveInd').innerText = "Draf Disimpan ✓";
+            $('saveInd').style.display = "block"; setTimeout(() => $('saveInd').style.display = "none", 1000);
+        }, 800);
     };
 
     const load = () => {
-        const d = JSON.parse(localStorage.getItem('MIA_D_V2'));
-        $('agC').innerHTML = ""; 
-        if(!d) { addP("Ucapan Pengerusi"); addP("Pembentangan Buku Pengurusan"); return; }
-        $('tajuk').value = d.t; $('tkh').value = d.tk; $('mS').value = d.ms; $('mE').value = d.me; $('tmpt').value = d.tm; $('pntp').value = d.p; reasons = d.r || {};
+        const d = JSON.parse(localStorage.getItem('MIA_PRO_V3'));
+        if(!d) { addP("Perutusan Pengerusi"); addP("Pengesahan Minit Lalu"); return; }
+        $('tajuk').value = d.t||""; $('tkh').value = d.tk||""; $('mS').value = d.ms||""; $('mE').value = d.me||""; $('tmpt').value = d.tm||""; 
+        $('pntp').value = d.p||""; $('namaPengerusi').value = d.nP||""; $('namaS/U').value = d.nS||"";
+        reasons = d.r || {};
         d.abs.forEach(n => { stats[n] = false; let idx = ahli.indexOf(n); if(idx > -1 && $('c_'+idx)) $('c_'+idx).checked = false; });
-        updAbs(); 
-        if(d.ag && d.ag.length > 0) d.ag.forEach(a => addP(a.t, a.c));
-        else { addP("Ucapan Pengerusi"); addP("Pembentangan Buku Pengurusan"); }
+        updAbs(); $('agC').innerHTML = "";
+        if(d.ag) d.ag.forEach(a => addP(a.t, a.c));
     };
 
-    const clr = () => confirm("Padam draf?") && [localStorage.removeItem('MIA_D_V2'), location.reload()];
+    const clr = () => confirm("Padam draf?") && [localStorage.removeItem('MIA_PRO_V3'), location.reload()];
     
     const fmtM = t => { 
         if(!t) return "-"; let [h, m] = t.split(':'); h = parseInt(h); 
-        return `${h % 12 || 12}.${m} ${h >= 12 ? (h >= 19 ? "malam" : h >= 14 ? "petang" : "tengah hari") : "pagi"}`; 
+        let suf = h >= 19 ? "malam" : h >= 14 ? "petang" : h >= 12 ? "tengah hari" : "pagi";
+        return `${h % 12 || 12}.${m} ${suf}`; 
+    };
+
+    // JANA FORMAT .DOCS (WORD)
+    const downloadDocs = () => {
+        const valTkh = $('tkh').value;
+        let tStr = valTkh || "-";
+        
+        let content = `
+            <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+            <head><meta charset='utf-8'><title>Minit Mesyuarat</title>
+            <style>
+                body { font-family: "Times New Roman", serif; line-height: 1.5; font-size: 11pt; }
+                .h { text-align: center; font-weight: bold; text-transform: uppercase; font-size: 14pt; border-bottom: 2px solid black; }
+                .meta { margin: 20px 0; }
+                .st { background-color: #e0e0e0; font-weight: bold; padding: 5px; margin-top: 20px; text-transform: uppercase; border-left: 5px solid black; }
+                .list { margin-left: 20px; }
+            </style>
+            </head>
+            <body>
+                <div class="h">${$('tajuk').value || "MINIT MESYUARAT"}</div>
+                <div class="meta">
+                    <b>TARIKH:</b> ${tStr}<br>
+                    <b>MASA:</b> ${fmtM($('mS').value)} - ${fmtM($('mE').value)}<br>
+                    <b>TEMPAT:</b> ${$('tmpt').value}<br>
+                    <b>PENGERUSI:</b> ${$('namaPengerusi').value}
+                </div>
+
+                <div class="st">1.0 KEHADIRAN</div>
+                <div class="list">${ahli.filter(n => stats[n]).map((n, i) => `<div>${i+1}. ${n}</div>`).join('')}</div>
+        `;
+
+        const tak = ahli.filter(n => !stats[n]);
+        if(tak.length) {
+            content += `<div class="st">2.0 TIDAK HADIR DENGAN KENYATAAN</div>
+                        <div class="list">${tak.map((n, i) => `<div>${i+1}. ${n} (${reasons[n] || 'Bersebab'})</div>`).join('')}</div>`;
+        }
+
+        content += `<div class="st">3.0 PERBINCANGAN</div>`;
+        document.querySelectorAll('.agenda-box').forEach((b, i) => {
+            content += `<div style="margin-top:15px"><b>3.${i+1} ${b.querySelector('.agT').value.toUpperCase()}</b></div>
+                        <div style="text-align:justify">${b.querySelector('.agC').value}</div>`;
+        });
+
+        content += `<div class="st">4.0 PENUTUP</div>
+                    <div style="margin-top:10px">${$('pntp').value}</div>
+                    <br><br>
+                    <table width="100%">
+                        <tr>
+                            <td width="50%" align="center">______________________<br><b>${$('namaS/U').value}</b><br>Setiausaha</td>
+                            <td width="50%" align="center">______________________<br><b>${$('namaPengerusi').value}</b><br>Pengerusi</td>
+                        </tr>
+                    </table>
+            </body></html>`;
+
+        const blob = new Blob(['\ufeff', content], { type: 'application/msword' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = ($('tajuk').value || 'Minit_Mesyuarat') + '.doc';
+        link.click();
+    };
+
+    const copyM = () => {
+        let txt = `*${($('tajuk').value || "MINIT MESYUARAT").toUpperCase()}*\n\n`;
+        txt += `Tarikh: ${$('tkh').value}\n`;
+        txt += `Masa: ${fmtM($('mS').value)} - ${fmtM($('mE').value)}\n\n`;
+        txt += `*1.0 KEHADIRAN*\n`;
+        ahli.filter(n => stats[n]).forEach((n, i) => txt += `${i+1}. ${n}\n`);
+        txt += `\n*3.0 PERBINCANGAN*\n`;
+        document.querySelectorAll('.agenda-box').forEach((b, i) => {
+            txt += `3.${i+1} ${b.querySelector('.agT').value.toUpperCase()}\n${b.querySelector('.agC').value}\n\n`;
+        });
+        navigator.clipboard.writeText(txt).then(() => {
+            $('saveInd').innerText = "Teks WhatsApp Disalin! 📋";
+            $('saveInd').style.display = "block"; setTimeout(() => $('saveInd').style.display = "none", 2000);
+        });
     };
 
     const printM = () => {
-        const dt = new Date($('tkh').value); 
-        const hr = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"], 
-              bln = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
-        
-        $('oT').innerText = $('tajuk').value;
-        const tStr = $('tkh').value ? `${hr[dt.getDay()]}, ${dt.getDate()} ${bln[dt.getMonth()]} ${dt.getFullYear()}` : '-';
-        
-        // Meta Infobox Modern
-        $('oM').innerHTML = `
-            <div><b>Tarikh:</b> ${tStr}</div>
-            <div><b>Masa:</b> ${fmtM($('mS').value)} - ${fmtM($('mE').value)}</div>
-            <div><b>Tempat:</b> ${$('tmpt').value}</div>
-            <div><b>Pengerusi:</b> Tuan Haji Marsan bin Osman</div>
-        `;
-
-        $('oH').innerHTML = ahli.filter(n => stats[n]).map((n, i) => `${i + 1}. ${n}`).join('<br>');
-        
+        const valTkh = $('tkh').value;
+        let tStr = "-";
+        if(valTkh) {
+            const dt = new Date(valTkh);
+            const hr = ["Ahad", "Isnin", "Selasa", "Rabu", "Khamis", "Jumaat", "Sabtu"], 
+                  bln = ["Januari", "Februari", "Mac", "April", "Mei", "Jun", "Julai", "Ogos", "September", "Oktober", "November", "Disember"];
+            tStr = `${dt.getDate()} ${bln[dt.getMonth()]} ${dt.getFullYear()} (${hr[dt.getDay()]})`;
+        }
+        $('oT').innerText = $('tajuk').value || "MINIT MESYUARAT";
+        $('oTk').innerText = ": " + tStr;
+        $('oMs').innerText = ": " + fmtM($('mS').value) + " - " + fmtM($('mE').value);
+        $('oTp').innerText = ": " + $('tmpt').value;
+        $('oPg').innerText = ": " + $('namaPengerusi').value;
+        $('oH').innerHTML = ahli.filter(n => stats[n]).map((n, i) => `<div>${i + 1}. ${n}</div>`).join('');
         const tak = ahli.filter(n => !stats[n]);
         $('oA_Sec').style.display = tak.length ? "block" : "none";
-        $('oA').innerHTML = tak.map((n, i) => `<div style="margin-bottom:3px;">${i + 1}. ${n} <i>(${reasons[n] || 'Tiada alasan'})</i></div>`).join('');
-        
-        $('oAg').innerHTML = Array.from(document.querySelectorAll('.agenda-box')).map((b, i) => `
-            <div class="ag-item">
-                <span class="ag-head">3.${i + 1} ${b.querySelector('.agT').value.toUpperCase()}</span>
-                <div class="ag-body">${b.querySelector('.agC').value}</div>
-            </div>
-        `).join('');
-        
+        $('oA').innerHTML = tak.map((n, i) => `<div>${i + 1}. ${n} <i>(${reasons[n] || 'Bersebab'})</i></div>`).join('');
+        $('oAg').innerHTML = Array.from(document.querySelectorAll('.agenda-box')).map((b, i) => `<div class="ag-item"><span class="ag-head">3.${i + 1} ${b.querySelector('.agT').value.toUpperCase()}</span><div class="ag-body">${b.querySelector('.agC').value}</div></div>`).join('');
         $('oP').innerText = $('pntp').value; 
+        $('sigSU').innerText = $('namaS/U').value;
+        $('sigPG').innerText = $('namaPengerusi').value;
         window.print();
     };
 
