@@ -30,7 +30,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
 .btn { cursor: pointer; border: none; font-weight: 700; transition: 0.3s; border-radius: 12px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
         .btn-add { background: #f3e8ff; color: var(--p); border: 2px dashed var(--p); padding: 12px; width: 100%; margin-bottom: 20px; }
 
-/* Butang AI Baru */
+/* Butang AI */
         .btn-ai { background: linear-gradient(135deg, #7e22ce, #3b82f6); color: white; border: none; padding: 8px 15px; border-radius: 8px; font-size: 0.75rem; font-weight: bold; cursor: pointer; margin-top: 8px; display: inline-block; transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .btn-ai:hover { opacity: 0.9; transform: translateY(-1px); }
         .btn-ai:disabled { background: #94a3b8; cursor: not-allowed; transform: none; box-shadow: none; }
@@ -164,44 +164,43 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
     // ==========================================
     // MASUKKAN API KEY ANDA DI SINI
     // ==========================================
-    const GEMINI_API_KEY = "AIzaSyCmaov8XKIjwGmJjskpb8Nh4Gvi_bAZl4E";
-    
-    // Fungsi Memanggil AI untuk membetulkan ayat
+   const GROQ_API_KEY = "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"; // Pastikan API Key Groq anda di sini
+
     async function baikiAyatAI(btnElement, textareaElement) {
         const teksAsal = textareaElement.value.trim();
+        if (!teksAsal) return alert("Sila masukkan draf terlebih dahulu.");
         
-        if (!teksAsal) return alert("Sila masukkan sedikit teks draf terlebih dahulu sebelum menggunakan AI.");
-        if (GEMINI_API_KEY === "LETAK_API_KEY_ANDA_DI_SINI") return alert("Sila masukkan API Key Gemini di dalam fail kod HTML ini.");
-
-        // Tukar status butang
         const teksButangAsal = btnElement.innerText;
-        btnElement.innerText = "⏳ Sedang memproses...";
+        btnElement.innerText = "⏳ Memproses (Groq)...";
         btnElement.disabled = true;
 
-        const promptArahan = `Sila betulkan tatabahasa, ejaan, dan struktur ayat berikut supaya menjadi laras bahasa rasmi dan profesional untuk minit mesyuarat. JANGAN tambah sebarang penerangan tambahan, JANGAN ubah konteks asal, HANYA berikan teks yang telah dibaiki sahaja:\n\n${teksAsal}`;
+        const promptArahan = `Sila betulkan tatabahasa, ejaan, dan struktur ayat berikut supaya menjadi laras bahasa rasmi dan profesional untuk minit mesyuarat. JANGAN tambah penerangan, HANYA berikan teks yang dibaiki:\n\n${teksAsal}`;
 
         try {
-            const respon = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+            const respon = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${GROQ_API_KEY}`
+                },
                 body: JSON.stringify({
-                    contents: [{ parts: [{ text: promptArahan }] }]
+                    // NAMA MODEL TELAH DIKEMASKINI KE VERSI TERBARU GROQ
+                    model: "llama-3.1-8b-instant", 
+                    messages: [{ role: "user", content: promptArahan }],
+                    temperature: 0.3
                 })
             });
 
             const data = await respon.json();
-            
-            if (data.candidates && data.candidates.length > 0) {
-                // Masukkan teks yang dibetulkan ke dalam kotak
-                textareaElement.value = data.candidates[0].content.parts[0].text.trim();
-                save(); // Simpan ke local storage
+            if (data.choices && data.choices.length > 0) {
+                textareaElement.value = data.choices[0].message.content.trim();
+                save();
             } else {
-                alert("Gagal memproses teks. Sila pastikan API Key sah dan kuota mencukupi.");
+                alert("Ralat Groq: " + (data.error?.message || "Gagal memproses"));
             }
         } catch (ralat) {
-            alert("Ralat sambungan AI: " + ralat.message);
+            alert("Ralat Rangkaian: " + ralat.message);
         } finally {
-            // Kembalikan butang ke asal
             btnElement.innerText = teksButangAsal;
             btnElement.disabled = false;
         }
@@ -251,7 +250,6 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
     const addP = (t = "", c = "") => {
         const div = document.createElement('div'); 
         div.className = 'agenda-box';
-        // HTML untuk ruangan perbincangan berserta Butang AI
         div.innerHTML = `
             <button class="btn-del" onclick="this.parentElement.remove();reindexAgenda();save()">PADAM</button>
             <label class="ag-num">Tajuk Point</label>
