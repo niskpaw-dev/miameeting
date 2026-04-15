@@ -21,8 +21,13 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
         .col { flex: 1 1 180px; }
 
 .att-box { max-height: 300px; overflow-y: auto; background: #f1f5f9; padding: 15px; border-radius: 12px; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
-        .att-item { display: flex; align-items: center; background: #fff; padding: 10px; border-radius: 10px; border: 1px solid var(--b); font-size: 0.8rem; cursor: pointer; }
+
+/* REKA BENTUK BARU UNTUK SENARAI AHLI (Ada butang pangkah) */
+        .att-item { display: flex; align-items: center; justify-content: space-between; background: #fff; padding: 8px 10px; border-radius: 10px; border: 1px solid var(--b); font-size: 0.8rem; }
+        .att-item label { display: flex; align-items: center; cursor: pointer; margin: 0; width: 100%; font-weight: normal; color: var(--txt); }
         .att-item input { width: auto; margin-right: 10px; transform: scale(1.2); }
+        .btn-del-ahli { color: #ef4444; background: #fee2e2; border: none; border-radius: 6px; padding: 4px 8px; cursor: pointer; font-weight: bold; font-size: 0.8rem; margin-left: 5px; transition: 0.2s; }
+        .btn-del-ahli:hover { background: #ef4444; color: #fff; }
 
 .agenda-box { background: #f8fafc; border: 1px solid var(--b); border-radius: 15px; padding: 15px; margin-bottom: 15px; position: relative; }
         .btn-del { position: absolute; top: 12px; right: 12px; color: #ef4444; border: none; background: #fee2e2; padding: 6px 12px; border-radius: 8px; cursor: pointer; font-size: 0.7rem; font-weight: bold; }
@@ -162,9 +167,9 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
 
 <script>
     // ==========================================
-    // MASUKKAN API KEY ANDA DI SINI
+    // MASUKKAN API KEY GROQ ANDA DI SINI
     // ==========================================
-   const GROQ_API_KEY = "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"; // Pastikan API Key Groq anda di sini
+    const GROQ_API_KEY = "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"; 
 
     async function baikiAyatAI(btnElement, textareaElement) {
         const teksAsal = textareaElement.value.trim();
@@ -184,7 +189,6 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
                     "Authorization": `Bearer ${GROQ_API_KEY}`
                 },
                 body: JSON.stringify({
-                    // NAMA MODEL TELAH DIKEMASKINI KE VERSI TERBARU GROQ
                     model: "llama-3.1-8b-instant", 
                     messages: [{ role: "user", content: promptArahan }],
                     temperature: 0.3
@@ -215,13 +219,33 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
 
     const init = () => { load(); };
 
+    // FUNGSI DIKEMASKINI: Ditambah butang pangkah (✕) untuk buang ahli
     const renderAhli = () => {
         $('aL').innerHTML = "";
         ahli.forEach((n, i) => { 
             if(stats[n] === undefined) stats[n] = true;
-            $('aL').innerHTML += `<label class="att-item"><input type="checkbox" ${stats[n] ? 'checked' : ''} onchange="tgl(${i})" id="c_${i}">${n}</label>`; 
+            $('aL').innerHTML += `
+                <div class="att-item">
+                    <label>
+                        <input type="checkbox" ${stats[n] ? 'checked' : ''} onchange="tgl(${i})" id="c_${i}">
+                        ${n}
+                    </label>
+                    <button class="btn-del-ahli" onclick="buangAhli(${i})" title="Padam ${n}">✕</button>
+                </div>`; 
         });
         updAbs();
+    };
+
+    // FUNGSI BARU: Buang ahli dari senarai
+    const buangAhli = (i) => {
+        if(confirm(`Adakah anda pasti mahu memadam "${ahli[i]}" dari senarai?`)) {
+            const nama = ahli[i];
+            ahli.splice(i, 1); // Buang dari array
+            delete stats[nama]; // Bersihkan rekod kehadiran
+            delete reasons[nama]; // Bersihkan rekod alasan
+            renderAhli(); // Refresh UI
+            save(); // Simpan perubahan ke Local Storage
+        }
     };
 
     const addAhli = () => {
@@ -304,7 +328,7 @@ input:focus, textarea:focus { outline: none; border-color: var(--p); box-shadow:
         if(d.ag) d.ag.forEach(a => addP(a.t, a.c));
     };
 
-    const clr = () => confirm("Adakah anda pasti mahu memadam semua draf dan senarai ahli tambahan?") && [localStorage.removeItem('MIA_PRO_V3'), location.reload()];
+    const clr = () => confirm("Adakah anda pasti mahu memadam semua draf dan rekod ahli tambahan?") && [localStorage.removeItem('MIA_PRO_V3'), location.reload()];
     
     const fmtM = t => { 
         if(!t) return "-"; let [h, m] = t.split(':'); h = parseInt(h); 
